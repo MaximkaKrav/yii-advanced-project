@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\TablesDeviceAndStoreModel;
 use frontend\models\TablesDeviseAndStoreModel;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -80,7 +81,7 @@ class SiteController extends Controller
     }
     public function actionTables()
     {
-        $rows = TablesDeviseAndStoreModel::find()->all();
+        $rows = TablesDeviceAndStoreModel::find()->all();
         return $this->render('tables', ['rows' =>$rows]);
     }
 

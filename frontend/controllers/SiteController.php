@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\TablesDeviseAndStoreModel;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -76,6 +77,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+    public function actionTables()
+    {
+        $rows = TablesDeviseAndStoreModel::find()->all();
+        return $this->render('tables', ['rows' =>$rows]);
     }
 
     /**

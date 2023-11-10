@@ -8,6 +8,7 @@ $form = ActiveForm::begin([
 ]) ?>
 <?= $form->field($model, 'serial_number') ?>
 <?= $form->field($model, 'store_id') ?>
+<?= $form->field($model, 'about') ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

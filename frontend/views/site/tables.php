@@ -24,10 +24,18 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         'serial_number',
-        'store_id',
+        [
+            'attribute' => 'store_id',
+            'format' => 'raw',
+            'value' => function ($model) {
+                return Html::a($model->store_id, ['store', 'store_id' => $model->store_id]);
+            },
+        ],
+        'about',
         'created_at',
         ['class' => 'yii\grid\ActionColumn'],
     ],
+
 
 ]);
 

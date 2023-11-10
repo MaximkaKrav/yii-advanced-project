@@ -14,16 +14,12 @@ class TablesDeviceAndStoreModel extends ActiveRecord{
     }
 
 
-    public function getStore()
-    {
-        return $this->hasOne(StoreModel::class, ['id' => 'store_id']);
-    }
 
 
     public function rules()
     {
         return [
-            [['serial_number', 'store_id'], 'required'],
+            [['serial_number', 'store_id','about'], 'required'],
             [['store_id'], 'integer'],
             [['serial_number'], 'string', 'max' => 255],
         ];

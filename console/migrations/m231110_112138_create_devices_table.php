@@ -17,6 +17,7 @@ class m231110_112138_create_devices_table extends Migration
             'id' => $this->primaryKey(),
             'serial_number' => $this->string()->unique()->notNull(),
             'store_id' => $this->integer(),
+            'about' => $this->string(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')->notNull(),
         ]);

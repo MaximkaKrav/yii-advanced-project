@@ -5,6 +5,21 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 class TablesDeviceAndStoreModel extends ActiveRecord{
 
+
+
+
+    public static function tableName()
+    {
+        return 'device';
+    }
+
+
+    public function getStore()
+    {
+        return $this->hasOne(StoreModel::class, ['id' => 'store_id']);
+    }
+
+
     public function rules()
     {
         return [

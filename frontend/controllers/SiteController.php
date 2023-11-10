@@ -4,10 +4,11 @@ namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\TablesDeviceAndStoreModel;
-use frontend\models\TablesDeviseAndStoreModel;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -79,10 +80,25 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    /**
+     * @throws \Throwable
+     */
     public function actionTables()
     {
-        $rows = TablesDeviceAndStoreModel::find()->all();
-        return $this->render('tables', ['rows' =>$rows]);
+//        $rows = TablesDeviceAndStoreModel::find()->all();
+//        return $this->render('tables', ['rows' =>$rows]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => TablesDeviceAndStoreModel::find(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('tables', [
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
     /**

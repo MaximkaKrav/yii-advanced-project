@@ -12,6 +12,9 @@
 use frontend\models\TablesDeviceAndStoreModel;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\helpers\Html;
+echo Html::a('Добавить', ['create'], ['class' => 'btn btn-success']);
+
 
 $dataProvider = new ActiveDataProvider([
     'query' => TablesDeviceAndStoreModel::find(),
@@ -20,13 +23,14 @@ $dataProvider = new ActiveDataProvider([
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
-        'id',
         'serial_number',
         'store_id',
         'created_at',
-        'updated_at',
+        ['class' => 'yii\grid\ActionColumn'],
     ],
+
 ]);
+
 
 
 ?>

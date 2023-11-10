@@ -6,7 +6,9 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\TablesDeviceAndStoreModel;
 use frontend\models\VerifyEmailForm;
 use Yii;
+use yii\base\Action;
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\web\BadRequestHttpException;
@@ -93,6 +95,7 @@ class SiteController extends Controller
             'pagination' => [
                 'pageSize' => 20,
             ],
+
         ]);
 
         return $this->render('tables', [
@@ -101,6 +104,43 @@ class SiteController extends Controller
 
     }
 
+    public function actionView($id){
+        $model = TablesDeviceAndStoreModel::findOne($id);
+        return $this->render('view',['model'=>$model]);
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    public function actionUpdate($id){
+
+        $model = TablesDeviceAndStoreModel::findOne($id);
+        if ($model->load(Yii::$app->request->post())){
+            $model->save();
+            Yii::$app->formatter->asDatetime(date('Y-d-m h:i:s'));
+            return $this->redirect(['view','id'=>$model->id]);
+        }
+        return $this->render('edit',['model'=>$model]);
+    }
+
+    public function actionDelete($id){
+        $model = TablesDeviceAndStoreModel::findOne($id);
+        $model->delete();
+        return $this->redirect(['tables']);
+    }
+
+    public function actionCreate()
+    {
+        $model = new TablesDeviceAndStoreModel();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['tables']);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Logs in a user.
      *

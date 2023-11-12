@@ -2,16 +2,10 @@
 
 namespace frontend\controllers;
 
-use app\models\Device;
 use frontend\models\ResendVerificationEmailForm;
-use frontend\models\TablesDeviceAndStoreModel;
 use frontend\models\VerifyEmailForm;
 use Yii;
-use yii\base\Action;
 use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -85,107 +79,6 @@ class SiteController extends Controller
     }
 
     /**
-     * @throws \Throwable
-     */
-    public function actionTables()
-    {
-//        $rows = TablesDeviceAndStoreModel::find()->all();
-//        return $this->render('tables', ['rows' =>$rows]);
-        $dataProvider = new ActiveDataProvider(
-            [
-                'query' => TablesDeviceAndStoreModel::find(),
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
-            ]
-        );
-
-        return $this->render(
-            'tables',
-            [
-                'dataProvider' => $dataProvider,
-            ]
-        );
-
-
-
-        $searchModel = new TablesDeviceAndStoreModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('tables', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionView($id)
-    {
-        $model = TablesDeviceAndStoreModel::findOne($id);
-        return $this->render('view', ['model' => $model]);
-    }
-
-    /**
-     * @throws InvalidConfigException
-     */
-    public function actionUpdate($id)
-    {
-        $model = TablesDeviceAndStoreModel::findOne($id);
-        if ($model->load(Yii::$app->request->post())) {
-            $model->save();
-            Yii::$app->formatter->asDatetime(date('Y-d-m h:i:s'));
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        return $this->render('edit', ['model' => $model]);
-    }
-
-    public function actionDelete($id)
-    {
-        $model = TablesDeviceAndStoreModel::findOne($id);
-        $model->delete();
-        return $this->redirect(['tables']);
-    }
-    public function actionStore($store_id)
-    {
-        $dataProvider = new \yii\data\ActiveDataProvider(
-            [
-                'query' => TablesDeviceAndStoreModel::find()->where(['store_id' => $store_id]),
-            ]
-        );
-
-        return $this->render('store', ['dataProvider' => $dataProvider]);
-    }
-    public function actionCreate()
-    {
-        $model = new TablesDeviceAndStoreModel();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['tables']);
-        }
-
-        return $this->render(
-            'create',
-            [
-                'model' => $model,
-            ]
-        );
-    }
-
-
-
-    public function actionStores($store_id)
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => TablesDeviceAndStoreModel::find()->where(['store_id' => $store_id]),
-        ]);
-
-        return $this->renderPartial('store', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
-
-    /**
      * Logs in a user.
      *
      * @return mixed
@@ -203,12 +96,9 @@ class SiteController extends Controller
 
         $model->password = '';
 
-        return $this->render(
-            'login',
-            [
-                'model' => $model,
-            ]
-        );
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -241,12 +131,9 @@ class SiteController extends Controller
             return $this->refresh();
         }
 
-        return $this->render(
-            'contact',
-            [
-                'model' => $model,
-            ]
-        );
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -272,12 +159,9 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->render(
-            'signup',
-            [
-                'model' => $model,
-            ]
-        );
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -298,12 +182,9 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
         }
 
-        return $this->render(
-            'requestPasswordResetToken',
-            [
-                'model' => $model,
-            ]
-        );
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -327,12 +208,9 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->render(
-            'resetPassword',
-            [
-                'model' => $model,
-            ]
-        );
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -374,11 +252,8 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
         }
 
-        return $this->render(
-            'resendVerificationEmail',
-            [
-                'model' => $model
-            ]
-        );
+        return $this->render('resendVerificationEmail', [
+            'model' => $model
+        ]);
     }
 }

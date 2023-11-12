@@ -27,12 +27,9 @@ services:
       - MYSQL_USER=yii2advanced
       - MYSQL_PASSWORD=secret
 
-
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin
     ports:
       - 1500:80
-    restart: always
     environment:
-      - PMA_HOST=mysql
-
+      - PMA_HOST=172.40.0.2

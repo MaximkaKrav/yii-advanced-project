@@ -106,6 +106,16 @@ class SiteController extends Controller
                 'dataProvider' => $dataProvider,
             ]
         );
+
+
+
+        $searchModel = new TablesDeviceAndStoreModel();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('tables', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionView($id)
@@ -159,6 +169,22 @@ class SiteController extends Controller
             ]
         );
     }
+
+
+
+    public function actionStores($store_id)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => TablesDeviceAndStoreModel::find()->where(['store_id' => $store_id]),
+        ]);
+
+        return $this->renderPartial('store', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
     /**
      * Logs in a user.
      *
